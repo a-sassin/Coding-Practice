@@ -1,0 +1,21 @@
+int isPalindrome(string s) {
+    int n=s.size();
+    for (int i=0;i<n/2;i++) {
+        if(s[i]!=s[n-i-1]) {
+            return 0;
+        }
+    }
+    return 1;    	  
+}
+
+/*
+Javascript
+*/
+
+isPalindrome(S){
+    const a = S.split('').reverse().join('');
+    if(S.toString() === a.toString())
+        return 1;
+    else 
+        return 0;
+}

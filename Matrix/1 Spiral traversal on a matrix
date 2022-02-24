@@ -1,0 +1,50 @@
+using namespace std;
+
+int arr[11][11];
+
+void printSpiral(int m,int n)
+{
+    int top=0,bottom=m-1,left=0,right=n-1;
+    while(top<=bottom && left<=right)
+    {
+        for(int i=left;i<=right;i++)
+        cout<<arr[top][i]<<" ";
+        top++;
+        
+        for(int i=top;i<=bottom;i++)
+        cout<<arr[i][right]<<" ";
+        right--;
+        
+        if(top<=bottom)
+        {
+            for(int i=right;i>=left;i--)
+            cout<<arr[bottom][i]<<" ";
+            bottom--;
+        }
+        
+        if(left<=right)
+        {
+            for(int i=bottom;i>=top;i--)
+            cout<<arr[i][left]<<" ";
+            left++;
+        }
+    }
+}
+
+int main() {
+	//code
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    int m,n;
+	    cin>>m>>n;
+	    for(int i=0;i<m;i++)
+	    for(int j=0;j<n;j++)
+	    cin>>arr[i][j];
+	    
+	    printSpiral(m,n);
+	    cout<<"\n";
+	}
+	return 0;
+}
