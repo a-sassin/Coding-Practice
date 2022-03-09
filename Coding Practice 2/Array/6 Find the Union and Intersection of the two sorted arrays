@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void getUnionSet(int first[], int n, int second[], int m)
+{
+    set<int> s;
+    for (int i = 0; i < n; i++)
+    {
+        s.insert(first[i]);
+    }
+    for (int i = 0; i < m; i++)
+    {
+        s.insert(second[i]);
+    }
+    cout << s.size() << endl;
+
+    for (auto itr = s.begin(); itr != s.end(); itr++)
+    {
+        cout << *itr << " ";
+    }
+}
+
+void getUnionMap(int first[], int n, int second[], int m)
+{
+    map<int, int> mp;
+
+    for (int i = 0; i < n; i++)
+    {
+        mp.insert({first[i], i});
+    }
+    for (int i = 0; i < m; i++)
+    {
+        mp.insert({second[i], i});
+    }
+
+    cout << mp.size() << endl;
+
+    for (auto itr = mp.begin(); itr != mp.end(); itr++)
+        cout << itr->first << " ";
+
+    // for (auto itr : mp)
+    //     cout << itr.first << " ";
+}
+
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n, m;
+        cin >> n >> m;
+        int first[n], second[m];
+        for (int i = 0; i < n; i++)
+        {
+            cin >> first[i];
+        }
+        for (int i = 0; i < m; i++)
+        {
+            cin >> second[i];
+        }
+
+        getUnion(first, n, second, m);
+    }
+    return 0;
+}

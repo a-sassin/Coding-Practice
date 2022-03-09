@@ -1,0 +1,40 @@
+#include <iostream>
+using namespace std;
+
+int getMinDiff(int arr[], int len, int k)
+{
+    sort(arr, arr + len);
+    int minDiff = arr[len - 1] - arr[0];
+
+    int tempMin, tempMax;
+    tempMin = arr[0];
+    tempMax = arr[len - 1];
+
+    for (int i = 1; i < len; i++)
+    {
+        tempMin = min(arr[0] + k, arr[i] - k);
+        tempMax = max(arr[i - 1] + k, arr[len - 1] - k);
+
+        minDiff = min(minDiff, tempMax - tempMin);
+    }
+    return minDiff;
+}
+
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n, k;
+        cin >> n >> k;
+        int arr[n];
+        for (int i = 0; i < n; i++)
+        {
+            cin >> arr[i];
+        }
+
+        cout << getMinDiff(arr, n, k);
+    }
+    return 0;
+}

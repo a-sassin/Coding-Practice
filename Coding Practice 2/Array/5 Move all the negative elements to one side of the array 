@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void rearrangeNumbers(int arr[], int n)
+{
+    int j = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (arr[i] < 0)
+        {
+            if (i != j)
+            {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+            j++;
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+}
+
+int main()
+{
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        int a[n];
+        for (int i = 0; i < n; i++)
+        {
+            cin >> a[i];
+        }
+        rearrangeNumbers(a, n);
+    }
+    return 0;
+}
+
+// Two pointer approach
+
+void shiftall(int arr[], int left, int right)
+{
+    while (left <= right)
+    {
+        if (arr[left] < 0 && arr[right] < 0)
+            left += 1;
+
+        else if (arr[left] > 0 && arr[right] < 0)
+        {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left += 1;
+            right -= 1;
+        }
+
+        else if (arr[left] > 0 && arr[right] > 0)
+            right -= 1;
+        else
+        {
+            left += 1;
+            right -= 1;
+        }
+    }
+}
