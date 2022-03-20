@@ -1,0 +1,77 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long LL;
+typedef unsigned long long ULL;
+typedef vector<int> vi;
+typedef vector<vi> vii;
+typedef vector<tuple<int,int,int>> vti3;
+
+int mod1 = (1e9+7);
+
+#define FOR(i,a,b) for(long i=a;i<b;i++)
+#define pb push_back
+#define ll long long
+#define pob pop_back
+#define testCases LL N;cin>>N;while(N--)
+
+void printAns(int f){
+    if(f) cout<<"YES\n"; else cout<<"NO\n";
+}
+
+ll n;
+vector<vector<ll>> firDp,secDp;
+
+int main() {
+	// your codeeeeeeee goes here
+
+    firDp = vector<vector<ll>>(50+2,vector<ll>(2,0));secDp = vector<vector<ll>>(50+2,vector<ll>(2,0));
+    
+    firDp[0][0] = 1; secDp[0][0] = 0;
+    
+    vector<ll> firstDp(50+2,0), SecondDp(50+2,0);
+    vector<ll> prefixPreDp(50+2,0);
+    ll AddingDp =1,Adding2ndDp=0;ll PPP=0;
+    firstDp[0]=1;
+    FOR(i,1,50+2){
+        firDp[i][1] += firDp[i-1][0] + firDp[i-1][1];
+        firDp[i][0] += firDp[i-1][0] + firDp[i-1][1];
+        secDp[i][1] += firDp[i-1][0] + firDp[i-1][1] + secDp[i-1][0] + secDp[i-1][1];
+        secDp[i][0] += secDp[i-1][0] + secDp[i-1][1];
+        AddingDp += firDp[i][0] + firDp[i][1];firstDp[i] = AddingDp;
+        Adding2ndDp += secDp[i][0] + firDp[i][1];SecondDp[i] = Adding2ndDp;
+        PPP += Adding2ndDp; prefixPreDp[i] = PPP;
+    }
+    
+	int tes;
+	cin>>tes;
+	while(tes--){
+        ll k;
+        cin>>n>>k;
+
+        ll current=1;ll answer =1;ll next=1;
+        string str;str.pb('1');
+        ll i=1;
+        while(current<k){
+            ll result = firstDp[n-i-1];
+            if(current+result<k){
+                str.pb('1');
+                answer += next*result;
+                answer+= SecondDp[n-i-1];
+                next++;
+                answer+=next;
+                current++;current+=result;
+
+                if(n>3 && i<=n-3){
+                    answer+=prefixPreDp[n-(i+2)];
+                }
+            } else {
+                str.pb('0');answer+=next;current++;
+            }
+            i++;
+        }
+        cout<<answer<<"\n";
+    }
+	return 0;
+}

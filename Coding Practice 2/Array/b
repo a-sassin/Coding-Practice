@@ -1,0 +1,88 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#include <ext/pb_ds/tree_policy.hpp>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+
+typedef long long LL;
+typedef unsigned long long ULL;
+typedef vector<int> vi;
+typedef vector<vi> vii;
+typedef vector<tuple<int, int, int>> vti3;
+
+#define pb push_back
+#define ll long long
+#define pob pop_back
+
+tree<ll, ll, less<ll>, rb_tree_tag, tree_order_statistics_node_update> str;
+
+int n;vi jrd[100005];int nodeValue[100005];
+
+int mexTrees(int node, int constant)
+{
+    str[nodeValue[node]] += 1;
+    int maximum = 0;
+
+    int left = 0;
+    int right = str.size() - 1, middle;
+    while (left <= right)
+    {
+        middle = (left + right) / 2;
+        auto element = *str.find_by_order(middle);
+        if (element.first > middle)
+        {
+            right = middle - 1;
+        }
+        else
+        {
+            maximum = max(middle + 1, maximum);
+            left = middle + 1;
+        }
+    }
+
+    for (auto itr : jrd[node])
+    {
+        if (itr != constant)
+        {
+            maximum = max(maximum, mexTrees(itr, node));
+        }
+    }
+
+    str[nodeValue[node]]--;
+    if (str[nodeValue[node]] == 0)
+    {
+        str.erase(str.find(nodeValue[node]));
+    }
+    return maximum;
+}
+
+int main()
+{
+    // your codeeeeeeee goes here
+
+    int tes;
+    cin >> tes;
+    while (tes--)
+    {
+        cin >> n;
+
+        for (long i = 0; i < n + 1; i++)
+            jrd[i].clear();
+
+        for (long i = 1; i < n + 1; i++)
+            cin >> nodeValue[i];
+
+        for (long i = 0; i < n - 1; i++)
+        {
+            int first, second;
+            cin >> first >> second;
+            jrd[first].pb(second);
+            jrd[second].pb(first);
+        }
+
+        int answer = mexTrees(1, 0);
+        cout << answer << "\n";
+    }
+    return 0;
+}
